@@ -10,3 +10,9 @@ JOB SCRAPER
 
 import pandas as pd
 import numpy as np
+from selenium import webdriver
+import time
+from datetime import date
+
+driver = webdriver.Chrome(r"chromedriver.exe")
+
