@@ -16,3 +16,5 @@ from datetime import date
 
 driver = webdriver.Chrome(r"chromedriver.exe")
 
+link = 'https://www.linkedin.com/jobs/search/?f_C=37759&locationId=OTHERS.worldwide'
+
