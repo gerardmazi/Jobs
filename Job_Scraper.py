@@ -16,12 +16,39 @@ from datetime import date
 
 driver = webdriver.Chrome(r"chromedriver.exe")
 
-link = 'https://www.linkedin.com/jobs/search/?f_C=17719&locationId=OTHERS.worldwide'
+driver.get('https://www.linkedin.com/jobs/search/?f_C=37759&locationId=OTHERS.worldwide')
 
-driver.get(link)
-driver.find_element_by_xpath('//li[@class = "occludable-update artdeco-list__item--offset-4 artdeco-list__item p0 ember-view"]').click()
-driver.find_element_by_xpath('//h2[@class = "jobs-details-top-card__job-title t-20 t-black t-normal"]').text
-driver.find_element_by_xpath('//a[@class = "jobs-details-top-card__company-url ember-view"]').text
-driver.find_element_by_xpath('//a[@class = "jobs-details-top-card__exact-location t-black--light link-without-visited-state"]').text
-driver.find_element_by_xpath('//ul[@class = "jobs-box__list jobs-description-details__list js-formatted-industries-list"]').text
-driver.find_element_by_xpath('//div[@class = "jobs-box__html-content jobs-description-content__text t-14 t-black--light t-normal"]').text
+roles = int(driver.find_element_by_xpath('//span[@class = "results-context-header__job-count"]').text)
+pages = int(roles / 25)
+
+role, company, location, info, descript = [], [], [], [], []
+
+for p in range(pages):
+    driver.find_element_by_xpath('//button[@class = "see-more-jobs"]').click()
+    print('trial ' + str(p))
+    time.sleep(2)
+
+for r in range(roles):
+    # Select listing
+    driver.find_element_by_xpath('//a[@class = "result-card__full-card-link"]').click()
+
+    # Record role
+    role_nam = driver.find_element_by_xpath('//h2[@class = "topcard__title"]').text
+    role.append(role_nam)
+
+    # Record company name
+    comp_nam = driver.find_element_by_xpath('//a[@class = "topcard__org-name-link topcard__flavor--black-link"]').text
+    company.append(comp_nam)
+
+    # Record location
+    loc_nam = driver.find_element_by_xpath('//span[@class = "topcard__flavor topcard__flavor--bullet"]').text
+    location.append(loc_nam)
+
+    # Additional role info
+    add_info = driver.find_element_by_xpath('//ul[@class = "job-criteria__list"]').text
+    info.append(add_info)
+
+    # Role description
+    role_desc = driver.find_element_by_xpath('//div[@class = "description__text description__text--rich"]').text
+    descript.append(role_desc)
+
