@@ -10,13 +10,7 @@ JOB KEWORD TREND
 
 import pandas as pd
 import numpy as np
-import time
 from selenium import webdriver
-from bs4 import BeautifulSoup
-import getpass
-import requests
-from selenium.webdriver.common.keys import Keys
-import pprint
 
 userid = ''
 password = ''
