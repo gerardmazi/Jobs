@@ -39,8 +39,8 @@ time_stamp = pd.to_datetime('2020-03-27')
 
 int = pd.DataFrame({'Date': [], 'Comp': [], 'Info': [], 'FTE': [], 'Roles': [], 'Skill': [], 'Skill_No': []})
 
-userid = 'gerard.mazi@gmail.com'
-password = 'Geruci0203'
+userid = ''
+password = ''
 
 driver = webdriver.Chrome(r"chromedriver.exe")
 
