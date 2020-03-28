@@ -13,31 +13,37 @@ import numpy as np
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 import time
+import re
+
 
 comps = [
     'https://www.linkedin.com/company/joinsquare/',
     'https://www.linkedin.com/company/paypal/'
 ]
 
-skills = [
+data_sci = [
     'data science', 'machine learning', 'artificial intelligence', 'deep learning', 'neural networks', 'NLP',
-    'distributed', 'natural language processing', 'computer vision',
-
-    'python', 'hive', 'hadoop', 'spark', 'scala', 'tensorflow', 'kubernetes', 'SQL', 'ETL', 'tableau', 'PowerBI',
-    'QuickSight', 'R', 'SAS', 'Redshift', "Snowflake", "S3", 'Presto', 'AWS', 'Azure', 'keras',
-    
-    'engineer', 'software', 'developer', 'api',
-
-    'math', 'computer science', 'engineering', 'economics', 'statistics', 'physics', 'MS', 'masters', 'PhD',
-    
-    'blockchain', 'distributed ledger', 'cryptocurrency', 'bitcoin',
-
-    'sales', 'customer success', 'account manager', 'engagement', 'implementation'
+    'distributed', 'natural language processing', 'computer vision'
 ]
+
+tools = [
+    'python', 'hive', 'hadoop', 'spark', 'scala', 'tensorflow', 'kubernetes', 'SQL', 'ETL', 'tableau', 'PowerBI',
+    'QuickSight', 'R', 'SAS', 'Redshift', "Snowflake", "S3", 'Presto', 'AWS', 'Azure', 'keras'
+]
+
+dev = ['engineer', 'software', 'developer', 'api']
+
+edu = ['math', 'computer science', 'engineering', 'economics', 'statistics', 'physics', 'MS', 'masters', 'PhD']
+
+crypto = ['blockchain', 'distributed ledger', 'cryptocurrency', 'bitcoin']
+
+sales = ['sales', 'customer success', 'account manager', 'engagement', 'implementation']
+
+skills = data_sci + tools + dev + edu + crypto + sales
 
 time_stamp = pd.to_datetime('2020-03-27')
 
-int = pd.DataFrame({'Date': [], 'Comp': [], 'Info': [], 'FTE': [], 'Roles': [], 'Skill': [], 'Skill_No': []})
+jobs = pd.DataFrame({'Date': [], 'Comp': [], 'Info': [], 'FTE': [], 'Roles': [], 'Skill': [], 'Skill_No': []})
 
 userid = ''
 password = ''
@@ -64,11 +70,17 @@ for c in comps:
     # Company name
     t_comp = driver.find_element_by_xpath('//*[@class="org-top-card-summary__title t-24 t-black truncate"]').text
 
-    # Company info
-    t_info = driver.find_element_by_xpath('//*[@class="inline-block"]').text
+    # LinkedIn followers
+    t_info = re.findall(
+        r'\d+(?:,\d+)?',
+        driver.find_element_by_xpath('//*[@class="inline-block"]').text
+    )
 
     # Full time employees
-    t_fte = driver.find_element_by_xpath('//*[@data-control-name="topcard_see_all_employees"]').text
+    t_fte = re.findall(
+        r'\d+(?:,\d+)?',
+        driver.find_element_by_xpath('//*[@data-control-name="topcard_see_all_employees"]').text
+    )
 
     # Navigate to jobs page
     driver.find_element_by_xpath('//*[@data-control-name="page_member_main_nav_jobs_tab"]').click()
@@ -77,7 +89,10 @@ for c in comps:
     time.sleep(3)
 
     # Total number of jobs listed
-    t_roles = driver.find_element_by_xpath('//*[@class="display-flex t-12 t-black--light t-normal"]').text
+    t_roles = re.findall(
+        r'\d+(?:,\d+)?',
+        driver.find_element_by_xpath('//*[@class="display-flex t-12 t-black--light t-normal"]').text
+    )
 
     # Search pre-specified skills
     for s in skills:
@@ -90,9 +105,12 @@ for c in comps:
 
         # Append results
         try:
-            t_skills = driver.find_element_by_xpath('//*[@class="display-flex t-12 t-black--light t-normal"]').text
+            t_skills = re.findall(
+                r'\d+(?:,\d+)?',
+                driver.find_element_by_xpath('//*[@class="display-flex t-12 t-black--light t-normal"]').text
+            )
         except NoSuchElementException:
-            t_skills = '0 results'
+            t_skills = '0'
 
         # Combine results - long format
         temp = pd.DataFrame(
@@ -108,7 +126,61 @@ for c in comps:
         )
 
         # Aggregate results
-        int = pd.concat([int, temp], ignore_index=True)
+        jobs = pd.concat([int, temp], ignore_index=True)
         time.sleep(2)
 
-int.to_pickle('int.pkl')
+# Convert to integer
+cols = ['Info', 'FTE', 'Roles', 'Skill_No']
+for c in cols:
+    jobs[c] = jobs[c].str.replace(',', '').astype(int)
+
+# Job category
+jobs['Cat'] = np.nan
+jobs.loc[jobs.Skill.isin(data_sci), 'Cat'] = 'data_sci'
+jobs.loc[jobs.Skill.isin(tools), 'Cat'] = 'tools'
+jobs.loc[jobs.Skill.isin(dev), 'Cat'] = 'dev'
+jobs.loc[jobs.Skill.isin(edu), 'Cat'] = 'edu'
+jobs.loc[jobs.Skill.isin(crypto), 'Cat'] = 'crypto'
+jobs.loc[jobs.Skill.isin(sales), 'Cat'] = 'sales'
+
+# Append to stored jobs
+job_store = pd.read_pickle('job_store.pkl')
+job_store = pd.concat([job_store, jobs], axis=0)
+job_store.to_pickle('job_store.pkl')
+
+#######################################################################################################################
+# ANALYTICS
+pd.concat(
+    [
+        pd.crosstab(jobs.Comp, jobs.Cat, values=jobs.Skill_No, aggfunc=np.sum),
+        pd.crosstab(jobs.Comp, jobs.Cat, values=jobs.Skill_No, normalize='index', aggfunc=np.sum)
+    ]
+)
+
+job_trend = jobs.groupby(['Date', 'Comp', 'Cat'])['Skill_No'].sum().unstack()
+
+job_trend['Total'] = job_trend.sum(axis=1)
+
+job_trend = pd.merge(
+    job_trend,
+    jobs.groupby(['Date', 'Comp'])['Roles'].max(),
+    how='left',
+    on=['Date', 'Comp']
+)
+
+job_trend['Rel_Scor'] = job_trend.Roles / job_trend.Total
+
+job_trend = pd.merge(
+    job_trend,
+    pd.crosstab(
+        [jobs.Date, jobs.Comp],
+        jobs.Cat,
+        values=jobs.Skill_No,
+        normalize='index',
+        aggfunc=np.sum
+    ),
+    how='left',
+    on=['Date', 'Comp'],
+    suffixes=['', '_p']
+)
+
