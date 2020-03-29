@@ -4,6 +4,8 @@
     <list default="true" id="6280bb93-4355-427f-93a5-845af814be79" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Job_Trend.py" beforeDir="false" afterPath="$PROJECT_DIR$/Job_Trend.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Skill_Heatmap.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/job_store.pkl" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -91,7 +93,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585366692118</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="For loop update">
+      <created>1585434446014</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1585434446014</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

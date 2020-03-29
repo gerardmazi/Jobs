@@ -15,11 +15,16 @@ from selenium.common.exceptions import NoSuchElementException
 import time
 import re
 
-
+'=============================================================='
 comps = [
-    'https://www.linkedin.com/company/joinsquare/',
-    'https://www.linkedin.com/company/paypal/'
+    'https://www.linkedin.com/company/workday/'
 ]
+
+time_stamp = pd.to_datetime('2020-03-28')
+
+userid = 'gerard.mazi@gmail.com'
+password = 'Geruci0203'
+'=============================================================='
 
 data_sci = [
     'data science', 'machine learning', 'artificial intelligence', 'deep learning', 'neural networks', 'NLP',
@@ -33,7 +38,7 @@ tools = [
 
 dev = ['engineer', 'software', 'developer', 'api']
 
-edu = ['math', 'computer science', 'engineering', 'economics', 'statistics', 'physics', 'MS', 'masters', 'PhD']
+edu = ['math', 'computer science', 'engineering', 'economics', 'statistics', 'physics', 'masters', 'PhD']
 
 crypto = ['blockchain', 'distributed ledger', 'cryptocurrency', 'bitcoin']
 
@@ -41,12 +46,7 @@ sales = ['sales', 'customer success', 'account manager', 'engagement', 'implemen
 
 skills = data_sci + tools + dev + edu + crypto + sales
 
-time_stamp = pd.to_datetime('2020-03-27')
-
-jobs = pd.DataFrame({'Date': [], 'Comp': [], 'Info': [], 'FTE': [], 'Roles': [], 'Skill': [], 'Skill_No': []})
-
-userid = ''
-password = ''
+#job_temp = pd.DataFrame({'Date': [], 'Comp': [], 'Info': [], 'FTE': [], 'Roles': [], 'Skill': [], 'Skill_No': []})
 
 driver = webdriver.Chrome(r"chromedriver.exe")
 
@@ -65,7 +65,7 @@ time.sleep(3)
 for c in comps:
 
     driver.get(c)
-    time.sleep(3)
+    time.sleep(4)
 
     # Company name
     t_comp = driver.find_element_by_xpath('//*[@class="org-top-card-summary__title t-24 t-black truncate"]').text
@@ -84,9 +84,9 @@ for c in comps:
 
     # Navigate to jobs page
     driver.find_element_by_xpath('//*[@data-control-name="page_member_main_nav_jobs_tab"]').click()
-    time.sleep(3)
+    time.sleep(4)
     driver.find_element_by_xpath('//*[@data-control-name="see_all_jobs"]').click()
-    time.sleep(3)
+    time.sleep(4)
 
     # Total number of jobs listed
     t_roles = re.findall(
@@ -98,8 +98,9 @@ for c in comps:
     for s in skills:
         # Iterate through skills
         driver.find_element_by_xpath('//*[@class="jobs-search-box__text-input"]').clear()
-        time.sleep(2)
+        time.sleep(4)
         driver.find_element_by_xpath('//*[@class="jobs-search-box__text-input"]').send_keys(s)
+        time.sleep(1)
         driver.find_element_by_css_selector('button.jobs-search-box__submit-button').click()
         time.sleep(5)
 
@@ -126,41 +127,45 @@ for c in comps:
         )
 
         # Aggregate results
-        jobs = pd.concat([int, temp], ignore_index=True)
+        job_temp = pd.concat([job_temp, temp], ignore_index=True)
         time.sleep(2)
 
+#######################################################################################################################
 # Convert to integer
 cols = ['Info', 'FTE', 'Roles', 'Skill_No']
 for c in cols:
-    jobs[c] = jobs[c].str.replace(',', '').astype(int)
+    job_temp[c] = job_temp[c].str.replace(',', '').astype(int)
 
 # Job category
-jobs['Cat'] = np.nan
-jobs.loc[jobs.Skill.isin(data_sci), 'Cat'] = 'data_sci'
-jobs.loc[jobs.Skill.isin(tools), 'Cat'] = 'tools'
-jobs.loc[jobs.Skill.isin(dev), 'Cat'] = 'dev'
-jobs.loc[jobs.Skill.isin(edu), 'Cat'] = 'edu'
-jobs.loc[jobs.Skill.isin(crypto), 'Cat'] = 'crypto'
-jobs.loc[jobs.Skill.isin(sales), 'Cat'] = 'sales'
+job_temp['Cat'] = np.nan
+job_temp.loc[job_temp.Skill.isin(data_sci), 'Cat'] = 'data_sci'
+job_temp.loc[job_temp.Skill.isin(tools), 'Cat'] = 'tools'
+job_temp.loc[job_temp.Skill.isin(dev), 'Cat'] = 'dev'
+job_temp.loc[job_temp.Skill.isin(edu), 'Cat'] = 'edu'
+job_temp.loc[job_temp.Skill.isin(crypto), 'Cat'] = 'crypto'
+job_temp.loc[job_temp.Skill.isin(sales), 'Cat'] = 'sales'
 
 # Append to stored jobs
-job_store = pd.read_pickle('job_store.pkl')
-job_store = pd.concat([job_store, jobs], axis=0)
-job_store.to_pickle('job_store.pkl')
+jobs = pd.read_pickle('store_jobs.pkl')
+jobs = pd.concat([jobs, job_temp], axis=0)
+jobs.to_pickle('store_jobs.pkl')
 
 #######################################################################################################################
 # ANALYTICS
 pd.concat(
     [
-        pd.crosstab(jobs.Comp, jobs.Cat, values=jobs.Skill_No, aggfunc=np.sum),
-        pd.crosstab(jobs.Comp, jobs.Cat, values=jobs.Skill_No, normalize='index', aggfunc=np.sum)
+        pd.crosstab(job_temp.Comp, job_temp.Cat, values=job_temp.Skill_No, aggfunc=np.sum),
+        pd.crosstab(job_temp.Comp, job_temp.Cat, values=job_temp.Skill_No, normalize='index', aggfunc=np.sum)
     ]
 )
 
+# Initial trend data frame
 job_trend = jobs.groupby(['Date', 'Comp', 'Cat'])['Skill_No'].sum().unstack()
 
+# Total roles scraped
 job_trend['Total'] = job_trend.sum(axis=1)
 
+# Merge posted roles
 job_trend = pd.merge(
     job_trend,
     jobs.groupby(['Date', 'Comp'])['Roles'].max(),
@@ -168,8 +173,21 @@ job_trend = pd.merge(
     on=['Date', 'Comp']
 )
 
+# Merge in number of employees
+job_trend = pd.merge(
+    job_trend,
+    jobs.groupby(['Date', 'Comp'])['FTE'].max(),
+    how='left',
+    on=['Date', 'Comp']
+)
+
+# Reliability Score (can we trust the results) (higher better)
 job_trend['Rel_Scor'] = job_trend.Roles / job_trend.Total
 
+# Roles per employee (high => hiring)
+job_trend['Hiring'] = job_trend.Roles / job_trend.FTE
+
+# Merge in the proportional (_p) role distributions
 job_trend = pd.merge(
     job_trend,
     pd.crosstab(
@@ -184,3 +202,4 @@ job_trend = pd.merge(
     suffixes=['', '_p']
 )
 
+job_trend.to_excel('out_job_trend.xlsx')
