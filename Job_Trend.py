@@ -17,13 +17,15 @@ import re
 
 '=============================================================='
 comps = [
-    'https://www.linkedin.com/company/workday/'
+    'https://www.linkedin.com/company/avalara/',
+    'https://www.linkedin.com/company/tiny-spec-inc/',
+    'https://www.linkedin.com/company/twilio-inc-/'
 ]
 
-time_stamp = pd.to_datetime('2020-03-28')
+time_stamp = pd.to_datetime('2020-03-31')
 
 userid = 'gerard.mazi@gmail.com'
-password = ''
+password = 'Geruci0203'
 '=============================================================='
 
 data_sci = [
@@ -42,11 +44,11 @@ edu = ['math', 'computer science', 'engineering', 'economics', 'statistics', 'ph
 
 crypto = ['blockchain', 'distributed ledger', 'cryptocurrency', 'bitcoin']
 
-sales = ['sales', 'customer success', 'account manager', 'engagement', 'implementation']
+sales = ['sales', 'customer success', 'account manager', 'engagement', 'implementation', 'consultant']
 
 skills = data_sci + tools + dev + edu + crypto + sales
 
-#job_temp = pd.DataFrame({'Date': [], 'Comp': [], 'Info': [], 'FTE': [], 'Roles': [], 'Skill': [], 'Skill_No': []})
+job_temp = pd.DataFrame({'Date': [], 'Comp': [], 'Info': [], 'FTE': [], 'Roles': [], 'Skill': [], 'Skill_No': []})
 
 driver = webdriver.Chrome(r"chromedriver.exe")
 
@@ -65,7 +67,7 @@ time.sleep(3)
 for c in comps:
 
     driver.get(c)
-    time.sleep(4)
+    time.sleep(3)
 
     # Company name
     t_comp = driver.find_element_by_xpath('//*[@class="org-top-card-summary__title t-24 t-black truncate"]').text
@@ -84,9 +86,9 @@ for c in comps:
 
     # Navigate to jobs page
     driver.find_element_by_xpath('//*[@data-control-name="page_member_main_nav_jobs_tab"]').click()
-    time.sleep(4)
+    time.sleep(2)
     driver.find_element_by_xpath('//*[@data-control-name="see_all_jobs"]').click()
-    time.sleep(4)
+    time.sleep(2)
 
     # Total number of jobs listed
     t_roles = re.findall(
@@ -98,11 +100,11 @@ for c in comps:
     for s in skills:
         # Iterate through skills
         driver.find_element_by_xpath('//*[@class="jobs-search-box__text-input"]').clear()
-        time.sleep(4)
+        time.sleep(2)
         driver.find_element_by_xpath('//*[@class="jobs-search-box__text-input"]').send_keys(s)
         time.sleep(1)
         driver.find_element_by_css_selector('button.jobs-search-box__submit-button').click()
-        time.sleep(5)
+        time.sleep(3)
 
         # Append results
         try:
@@ -154,8 +156,8 @@ jobs.to_pickle('store_jobs.pkl')
 # ANALYTICS
 pd.concat(
     [
-        pd.crosstab(job_temp.Comp, job_temp.Cat, values=job_temp.Skill_No, aggfunc=np.sum),
-        pd.crosstab(job_temp.Comp, job_temp.Cat, values=job_temp.Skill_No, normalize='index', aggfunc=np.sum)
+        pd.crosstab(job_temp.Comp, job_temp.Cat, values=job_temp.Skill_No, aggfunc=np.mean),
+        pd.crosstab(job_temp.Comp, job_temp.Cat, values=job_temp.Skill_No, normalize='index', aggfunc=np.mean)
     ]
 )
 
