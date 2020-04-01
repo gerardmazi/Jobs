@@ -25,7 +25,7 @@ comps = [
 time_stamp = pd.to_datetime('2020-03-31')
 
 userid = 'gerard.mazi@gmail.com'
-password = 'Geruci0203'
+password = ''
 '=============================================================='
 
 data_sci = [
