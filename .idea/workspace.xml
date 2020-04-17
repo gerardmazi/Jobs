@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6280bb93-4355-427f-93a5-845af814be79" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Job_Scraper.py" beforeDir="false" afterPath="$PROJECT_DIR$/Job_Scraper.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Job_Trend.py" beforeDir="false" afterPath="$PROJECT_DIR$/Job_Trend.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/store_jobs.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/store_jobs.pkl" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,7 +25,7 @@
   </component>
   <component name="ProjectId" id="1YoAs82utxUNJjgSpyR8EIAmcBO" />
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/Deposit Modeling" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="PyConsoleOptionsProvider">
@@ -118,7 +121,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585711985828</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="For loop update">
+      <created>1585712038867</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1585712038867</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

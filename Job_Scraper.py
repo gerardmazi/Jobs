@@ -13,42 +13,62 @@ import numpy as np
 from selenium import webdriver
 import time
 from datetime import date
+import re
 
 driver = webdriver.Chrome(r"chromedriver.exe")
 
-driver.get('https://www.linkedin.com/jobs/search/?f_C=37759&locationId=OTHERS.worldwide')
+time_stamp = pd.to_datetime('2020-04-09')
 
-roles = int(driver.find_element_by_xpath('//span[@class = "results-context-header__job-count"]').text)
+comps = 'https://www.linkedin.com/company/joinsquare/'
+
+userid = 'gerard.mazi@gmail.com'
+password = ''
+
+driver.get('https://www.linkedin.com/login?fromSignIn=true&trk=guest_homepage-basic_nav-header-signin')
+time.sleep(2)
+
+# Login
+driver.find_element_by_xpath('//*[@id="username"]').send_keys(userid)
+driver.find_element_by_xpath('//*[@id="password"]').send_keys(password)
+driver.find_element_by_xpath('//*[@class="btn__primary--large from__button--floating"]').click()
+time.sleep(5)
+
+# Run above first
+#######################################################################################################################
+# Go to company and jobs
+
+driver.get(comps)
+time.sleep(3)
+
+# Navigate to jobs page
+driver.find_element_by_xpath('//*[@data-control-name="page_member_main_nav_jobs_tab"]').click()
+time.sleep(2)
+driver.find_element_by_xpath('//*[@data-control-name="see_all_jobs"]').click()
+time.sleep(2)
+
+roles = list(
+    map(
+        int,
+        re.findall(
+            r'\d+(?:,\d+)?',
+            driver.find_element_by_xpath('//*[@class="display-flex t-12 t-black--light t-normal"]').text
+        )
+    )
+)[0]
+
 pages = int(roles / 25)
 
 role, company, location, info, descript = [], [], [], [], []
 
-for p in range(pages):
-    driver.find_element_by_xpath('//button[@class = "see-more-jobs"]').click()
-    print('trial ' + str(p))
-    time.sleep(2)
+# Select role in left pane
+driver.find_element_by_xpath('//*[@class="jobs-search-results__list artdeco-list"]/li[1]').click()
 
-for r in range(roles):
-    # Select listing
-    driver.find_element_by_xpath('//a[@class = "result-card__full-card-link"]').click()
+# Role Title
+role = driver.find_element_by_xpath('//*[@class="jobs-details-top-card__job-title t-20 t-black t-normal"]').text
 
-    # Record role
-    role_nam = driver.find_element_by_xpath('//h2[@class = "topcard__title"]').text
-    role.append(role_nam)
+# Role location
+loc = driver.find_element_by_xpath('//span[@class = "jobs-details-top-card__bullet"]').text
 
-    # Record company name
-    comp_nam = driver.find_element_by_xpath('//a[@class = "topcard__org-name-link topcard__flavor--black-link"]').text
-    company.append(comp_nam)
-
-    # Record location
-    loc_nam = driver.find_element_by_xpath('//span[@class = "topcard__flavor topcard__flavor--bullet"]').text
-    location.append(loc_nam)
-
-    # Additional role info
-    add_info = driver.find_element_by_xpath('//ul[@class = "job-criteria__list"]').text
-    info.append(add_info)
-
-    # Role description
-    role_desc = driver.find_element_by_xpath('//div[@class = "description__text description__text--rich"]').text
-    descript.append(role_desc)
+# Role description
+desc = driver.find_element_by_xpath('//div[@class = "jobs-box__html-content jobs-description-content__text t-14 t-black--light t-normal"]').text
 

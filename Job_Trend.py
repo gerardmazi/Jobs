@@ -15,14 +15,15 @@ from selenium.common.exceptions import NoSuchElementException
 import time
 import re
 
+jobs = pd.read_pickle('store_jobs.pkl')
+
 '=============================================================='
 comps = [
-    'https://www.linkedin.com/company/avalara/',
-    'https://www.linkedin.com/company/tiny-spec-inc/',
-    'https://www.linkedin.com/company/twilio-inc-/'
+    'https://www.linkedin.com/company/evoqua-water-technologies/'
 ]
 
-time_stamp = pd.to_datetime('2020-03-31')
+
+time_stamp = pd.to_datetime('2020-04-09')
 
 userid = 'gerard.mazi@gmail.com'
 password = ''
@@ -59,7 +60,7 @@ time.sleep(2)
 driver.find_element_by_xpath('//*[@id="username"]').send_keys(userid)
 driver.find_element_by_xpath('//*[@id="password"]').send_keys(password)
 driver.find_element_by_xpath('//*[@class="btn__primary--large from__button--floating"]').click()
-time.sleep(3)
+time.sleep(5)
 
 # Run above first
 #######################################################################################################################
@@ -148,7 +149,6 @@ job_temp.loc[job_temp.Skill.isin(crypto), 'Cat'] = 'crypto'
 job_temp.loc[job_temp.Skill.isin(sales), 'Cat'] = 'sales'
 
 # Append to stored jobs
-jobs = pd.read_pickle('store_jobs.pkl')
 jobs = pd.concat([jobs, job_temp], axis=0)
 jobs.to_pickle('store_jobs.pkl')
 
