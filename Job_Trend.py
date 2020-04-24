@@ -19,13 +19,12 @@ jobs = pd.read_pickle('store_jobs.pkl')
 
 '=============================================================='
 comps = [
-    'https://www.linkedin.com/company/zuora/',
-    'https://www.linkedin.com/company/appfolio-inc/',
-    'https://www.linkedin.com/company/upland-software/'
+    'https://www.linkedin.com/company/anaplan/',
+    'https://www.linkedin.com/company/blackline/'
 ]
 
 
-time_stamp = pd.to_datetime('2020-04-19')
+time_stamp = pd.to_datetime('2020-04-23')
 
 userid = 'gerard.mazi@gmail.com'
 password = ''
@@ -62,7 +61,6 @@ time.sleep(2)
 driver.find_element_by_xpath('//*[@id="username"]').send_keys(userid)
 driver.find_element_by_xpath('//*[@id="password"]').send_keys(password)
 driver.find_element_by_xpath('//*[@class="btn__primary--large from__button--floating"]').click()
-time.sleep(5)
 
 # Run above first
 #######################################################################################################################
@@ -164,7 +162,7 @@ pd.concat(
 )
 
 # Initial trend data frame
-job_trend = jobs.groupby(['Date', 'Comp', 'Cat'])['Skill_No'].sum().unstack()
+job_trend = jobs.groupby(['Date', 'Comp', 'Cat'])['Skill_No'].sum().unstack().reset_index()
 
 # Total roles scraped
 job_trend['Total'] = job_trend.sum(axis=1)
@@ -172,7 +170,7 @@ job_trend['Total'] = job_trend.sum(axis=1)
 # Merge posted roles
 job_trend = pd.merge(
     job_trend,
-    jobs.groupby(['Date', 'Comp'])['Roles'].max(),
+    jobs.groupby(['Date', 'Comp'])['Roles'].max().reset_index(),
     how='left',
     on=['Date', 'Comp']
 )
@@ -180,7 +178,7 @@ job_trend = pd.merge(
 # Merge in number of employees
 job_trend = pd.merge(
     job_trend,
-    jobs.groupby(['Date', 'Comp'])['FTE'].max(),
+    jobs.groupby(['Date', 'Comp'])['FTE'].max().reset_index(),
     how='left',
     on=['Date', 'Comp']
 )
@@ -200,10 +198,15 @@ job_trend = pd.merge(
         values=jobs.Skill_No,
         normalize='index',
         aggfunc=np.sum
-    ),
+    ).reset_index(),
     how='left',
     on=['Date', 'Comp'],
     suffixes=['', '_p']
 )
 
-job_trend.to_excel('out_job_trend.xlsx')
+job_trend.to_csv('out_job_trend.csv')
+
+# Individual comps
+comp_trend = job_trend.loc[job_trend.Comp == 'Anaplan', ['Date', 'FTE', 'Roles']].set_index('Date')
+comp_trend['Roles'].plot(title='Open Roles')
+comp_trend['FTE'].plot(title='Total FTEs')
