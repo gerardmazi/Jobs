@@ -149,7 +149,7 @@ job_temp.loc[job_temp.Skill.isin(crypto), 'Cat'] = 'crypto'
 job_temp.loc[job_temp.Skill.isin(sales), 'Cat'] = 'sales'
 
 # Append to stored jobs
-jobs = pd.concat([jobs, job_temp], axis=0)
+jobs = pd.concat([jobs, job_temp], axis=0, ignore_index=True)
 jobs.to_pickle('store_jobs.pkl')
 
 #######################################################################################################################
