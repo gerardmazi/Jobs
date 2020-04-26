@@ -20,11 +20,14 @@ jobs = pd.read_pickle('store_jobs.pkl')
 '=============================================================='
 comps = [
     'https://www.linkedin.com/company/anaplan/',
-    'https://www.linkedin.com/company/blackline/'
+    'https://www.linkedin.com/company/blackline/',
+    'https://www.linkedin.com/company/crowdstrike/',
+    'https://www.linkedin.com/company/qualys/',
+    'https://www.linkedin.com/company/zscaler/'
 ]
 
 
-time_stamp = pd.to_datetime('2020-04-23')
+time_stamp = pd.to_datetime('2020-04-25')
 
 userid = 'gerard.mazi@gmail.com'
 password = ''
