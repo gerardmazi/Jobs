@@ -15,19 +15,32 @@ from selenium.common.exceptions import NoSuchElementException
 import time
 import re
 
-#jobs = pd.read_pickle('store_jobs.pkl')
+jobs = pd.read_pickle('store_jobs.pkl')
 
 '=============================================================='
 comps = [
-    'https://www.linkedin.com/company/anaplan/'
+    'https://www.linkedin.com/company/zendesk/'
 ]
-
 
 time_stamp = pd.to_datetime('2020-04-26')
 
 userid = 'gerard.mazi@gmail.com'
 password = ''
 '=============================================================='
+
+data_sci = ['machine learning', 'deep learning', 'neural networks', 'NLP', 'natural language processing']
+
+tools = ['python']
+
+dev = ['engineer']
+
+edu = ['computer science', 'PhD']
+
+crypto = ['blockchain', 'distributed ledger']
+
+sales = ['sales', 'customer success', 'account manager', 'consultant']
+
+skills = data_sci + dev + edu + crypto + sales
 
 job_temp = pd.DataFrame({'Date': [], 'Comp': [], 'Info': [], 'FTE': [], 'Roles': [], 'Skill': [], 'Skill_No': []})
 
@@ -46,7 +59,7 @@ driver.find_element_by_xpath('//*[@class="btn__primary--large from__button--floa
 # Go to company and jobs
 for c in comps:
 
-    driver.get('https://www.linkedin.com/company/anaplan/')
+    driver.get(c)
     time.sleep(3)
 
     # Company name
@@ -69,16 +82,6 @@ for c in comps:
     time.sleep(2)
     driver.find_element_by_xpath('//*[@data-control-name="see_all_jobs"]').click()
     time.sleep(2)
-
-    # Navigate to job categories
-    driver.find_element_by_xpath(
-        '//*[@class="search-filters-bar__all-filters flex-shrink-zero mr3 artdeco-button artdeco-button--muted artdeco-button--2 artdeco-button--tertiary ember-view"]'
-    ).click()
-    time.sleep(2)
-
-    driver.find_element_by_xpath('//*[@class="search-s-facet__list pt3 ember-view"]').click()
-    time.sleep(2)
-
 
     # Total number of jobs listed
     t_roles = re.findall(
@@ -196,6 +199,6 @@ job_trend = pd.merge(
 job_trend.to_csv('out_job_trend.csv')
 
 # Individual comps
-comp_trend = job_trend.loc[job_trend.Comp == 'Anaplan', ['Date', 'FTE', 'Roles']].set_index('Date')
+comp_trend = job_trend.loc[job_trend.Comp == 'Zendesk', ['Date', 'FTE', 'Roles']].set_index('Date')
 comp_trend['Roles'].plot(title='Open Roles')
 comp_trend['FTE'].plot(title='Total FTEs')

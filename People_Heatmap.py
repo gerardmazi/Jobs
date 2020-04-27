@@ -71,8 +71,8 @@ comps = [
     'https://www.linkedin.com/company/proofpoint/',
     'https://www.linkedin.com/company/pluralsight/',
     'https://www.linkedin.com/company/realpage/',
-    'https://www.linkedin.com/company/vmware/',
-    'https://www.linkedin.com/company/zendesk/'
+    'https://www.linkedin.com/company/zendesk/',
+    'https://www.linkedin.com/company/vmware/'
 ]
 
 time_stamp = pd.to_datetime('2020-04-25')
