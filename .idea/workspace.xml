@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1720e25b-b10b-47a5-98f5-510ed7fd9d34" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Seattle_Startups.py" afterDir="false" />
+    <list default="true" id="6280bb93-4355-427f-93a5-845af814be79" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Job_Keyword.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Job_Trend.py" beforeDir="false" afterPath="$PROJECT_DIR$/Job_Trend.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/People_Heatmap.py" beforeDir="false" afterPath="$PROJECT_DIR$/People_Heatmap.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/store_jobs.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/store_jobs.pkl" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,7 +27,7 @@
   <component name="ProjectId" id="1YoAs82utxUNJjgSpyR8EIAmcBO" />
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/Deposit Modeling" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="PyConsoleOptionsProvider">
@@ -34,6 +36,11 @@
         <option name="useSoftWraps" value="true" />
       </console-settings>
     </option>
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\gmazi\Documents\GitHub\Jobs" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -52,7 +59,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="1720e25b-b10b-47a5-98f5-510ed7fd9d34" name="Default Changelist" comment="" />
+      <changelist id="6280bb93-4355-427f-93a5-845af814be79" name="Default Changelist" comment="" />
       <created>1583598776731</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -142,14 +149,21 @@
       <option name="project" value="LOCAL" />
       <updated>1587689971560</updated>
     </task>
-    <task id="LOCAL-00013" summary="People code">
-      <created>1587836789515</created>
+    <task id="LOCAL-00013" summary="For loop update">
+      <created>1587858672881</created>
       <option name="number" value="00013" />
       <option name="presentableId" value="LOCAL-00013" />
       <option name="project" value="LOCAL" />
-      <updated>1587836789515</updated>
+      <updated>1587858672881</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="For loop update">
+      <created>1587867861327</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1587867861327</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -168,7 +182,6 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Listing of jobs by keyword search" />
     <MESSAGE value="For loop update" />
-    <MESSAGE value="People code" />
-    <option name="LAST_COMMIT_MESSAGE" value="People code" />
+    <option name="LAST_COMMIT_MESSAGE" value="For loop update" />
   </component>
 </project>

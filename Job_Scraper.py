@@ -66,25 +66,25 @@ for p in range(2, pages + 1):
 
         # Select role in left pane
         driver.find_element_by_xpath('//*[@class="jobs-search-results__list artdeco-list"]/li[' + str(i) + ']/div/artdeco-entity-lockup').click()
-        #time.sleep(1)
+        time.sleep(1)
 
         # Role Title
         role.append(
            driver.find_element_by_xpath('//*[@class="jobs-details-top-card__job-title t-20 t-black t-normal"]').text
         )
-        #time.sleep(1)
+        time.sleep(1)
 
         # Role location
         loc.append(
             driver.find_element_by_xpath('//span[@class = "jobs-details-top-card__bullet"]').text
         )
-        #time.sleep(1)
+        time.sleep(1)
 
         # Role description
         desc.append(
             driver.find_element_by_xpath('//div[@class = "jobs-box__html-content jobs-description-content__text t-14 t-black--light t-normal"]').text
         )
-        #time.sleep(1)
+        time.sleep(1)
 
     driver.find_element_by_xpath('//*[@aria-label="Page ' + str(p) + '"]').click()
-    #time.sleep(1)
+    time.sleep(1)
