@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1720e25b-b10b-47a5-98f5-510ed7fd9d34" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/People_Heatmap.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Seattle_Startups.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/People_Heatmap.py" beforeDir="false" afterPath="$PROJECT_DIR$/People_Heatmap.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -141,7 +142,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587689971560</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="People code">
+      <created>1587836789515</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1587836789515</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -160,6 +168,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Listing of jobs by keyword search" />
     <MESSAGE value="For loop update" />
-    <option name="LAST_COMMIT_MESSAGE" value="For loop update" />
+    <MESSAGE value="People code" />
+    <option name="LAST_COMMIT_MESSAGE" value="People code" />
   </component>
 </project>

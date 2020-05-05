@@ -75,7 +75,7 @@ driver.find_element_by_xpath('//*[@class="btn__primary--large from__button--floa
 # Go to company and jobs
 for c in comps:
 
-    driver.get('https://www.linkedin.com/company/anaplan/')
+    driver.get(c)
     time.sleep(3)
 
     # Company name
