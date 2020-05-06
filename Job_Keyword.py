@@ -19,10 +19,23 @@ jobs = pd.read_pickle('store_jobs.pkl')
 
 '=============================================================='
 comps = [
-    'https://www.linkedin.com/company/zendesk/'
+    'https://www.linkedin.com/company/atlassian/',
+    'https://www.linkedin.com/company/box/',
+    'https://www.linkedin.com/company/docusign/',
+    'https://www.linkedin.com/company/ringcentral/',
+    'https://www.linkedin.com/company/smartsheet-com/',
+    'https://www.linkedin.com/company/coupa-software/',
+    'https://www.linkedin.com/company/dropbox/',
+    'https://www.linkedin.com/company/five9/',
+    'https://www.linkedin.com/company/redfin/',
+    'https://www.linkedin.com/company/zillow/',
+    'https://www.linkedin.com/company/veeva-systems/',
+    'https://www.linkedin.com/company/appfolio-inc/',
+    'https://www.linkedin.com/company/upland-software/',
+    'https://www.linkedin.com/company/zuora/'
 ]
 
-time_stamp = pd.to_datetime('2020-04-26')
+time_stamp = pd.to_datetime('2020-05-06')
 
 userid = 'gerard.mazi@gmail.com'
 password = ''

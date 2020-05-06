@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6280bb93-4355-427f-93a5-845af814be79" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Job_Keyword.py" afterDir="false" />
+    <list default="true" id="6280bb93-4355-427f-93a5-845af814be79" name="Default Changelist" comment="For loop update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Job_Trend.py" beforeDir="false" afterPath="$PROJECT_DIR$/Job_Trend.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/People_Heatmap.py" beforeDir="false" afterPath="$PROJECT_DIR$/People_Heatmap.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Job_Keyword.py" beforeDir="false" afterPath="$PROJECT_DIR$/Job_Keyword.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/store_jobs.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/store_jobs.pkl" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -163,7 +161,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587867861327</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="For loop update">
+      <created>1587960541352</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1587960541353</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
